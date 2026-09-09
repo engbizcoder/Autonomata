@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Autonomata</AssemblyName>
+    <RootNamespace>Autonomata</RootNamespace>
+    <PackageId>Autonomata</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Autonomata contributors</Authors>
+    <Description>A clean, standalone .NET state-machine library with a migration-friendly Automatonymous DSL.</Description>
+    <PackageTags>state-machine;finite-state-machine;automata;automatonymous</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IsPackable>true</IsPackable>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "workflowRun": "autonomata-first-release",
+  "feature": "first-release-core-state-machine",
+  "role": "Hardener",
+  "attempt": 1,
+  "completedAt": "2026-09-09T13:21:08Z",
+  "gitRevision": null,
+  "repositoryCondition": "Unborn repository with no resolvable HEAD; the report is bound to file hashes in its evidence artifact.",
+  "inputs": {
+    "specification": "docs/specification/first-release.md",
+    "projectPolicy": "docs/delivery/project-policy.md",
+    "domainContext": "CONTEXT.md",
+    "cleanerReport": "docs/delivery/reports/cleaner-first-release.json",
+    "cleanerEvidence": "docs/delivery/evidence/cleaner-first-release-gates.json",
+    "architectReport": "docs/delivery/reports/architect-first-release.json",
+    "harnessVersion": "v0.1.1",
+    "harnessCommit": "3f041a9c6263174242a841ee19f6b8aa372708e9"
+  },
+  "result": "pass",
+  "changes": {
+    "productionCode": [],
+    "tests": [
+      "Added state-specific Ignore versus DuringAny fallback coverage.",
+      "Added typed reference-payload identity and ordered callback coverage.",
+      "Added typed Ignore state-persistence coverage.",
+      "Added typed Finalize state-persistence coverage.",
+      "Extended the callback-failure fixture with a later callback to prove subsequent effects stop."
+    ],
+    "mutationInfrastructure": [
+      ".config/dotnet-tools.json pins dotnet-stryker 4.16.0.",
+      "stryker-config.json defines the critical execution and binder mutation spans and an 80% break threshold.",
+      "scripts/mutation.sh restores and runs the pinned local tool."
+    ],
+    "evidenceArtifacts": [
+      "docs/delivery/evidence/hardener-first-release-gates.json",
+      "docs/delivery/evidence/hardener-first-release-mutation-report.json"
+    ]
+  },
+  "challengeResults": [
+    {
+      "invariant": "State-specific behavior versus DuringAny selection",
+      "result": "pass",
+      "assessment": "Selection mutants were killed, and a state-specific ignored behavior now proves that fallback is not composed or selected."
+    },
+    {
+      "invariant": "Callback ordering and awaiting",
+      "result": "pass",
+      "assessment": "Callback-invocation and step-registration mutations were killed; the suite proves synchronous-before-asynchronous order, incomplete RaiseEvent while blocked, and transition only after release."
+    },
+    {
+      "invariant": "Transition and finalization persistence",
+      "result": "pass",
+      "assessment": "Transition and Final-state write mutations were killed, including the previously uncovered typed Finalize wrapper."
+    },
+    {
+      "invariant": "Ignore behavior",
+      "result": "pass",
+      "assessment": "Untyped, typed, and state-specific-over-fallback no-op behavior is asserted. Remaining Ignore flag/wrapper survivors are equivalent because ignored binders necessarily register an exact empty behavior."
+    },
+    {
+      "invariant": "Typed data propagation",
+      "result": "pass",
+      "assessment": "Typed callback construction/invocation mutations were killed; both scalar data and reference identity are asserted across synchronous and asynchronous callbacks."
+    },
+    {
+      "invariant": "Failure stops later effects",
+      "result": "pass",
+      "assessment": "The fixture now places both a callback and transition after the throwing callback; neither may execute, while the preceding effect remains."
+    }
+  ],
+  "mutation": {
+    "result": "pass",
+    "scorePercent": 84.0,
+    "thresholdBreakPercent": 80,
+    "killed": 21,
+    "survived": 4,
+    "importantSurvivors": [],
+    "survivorClassification": "All four survivors are equivalent within the approved contract; exact classifications and justifications are recorded in the evidence artifact."
+  },
+  "gates": {
+    "lockedRestore": "pass",
+    "releaseBuild": "pass: 0 warnings, 0 errors",
+    "tests": "pass: 14/14",
+    "format": "pass",
+    "coverage": "pass: 92.78% line coverage against 90% threshold",
+    "criticalMutation": "pass: 84.00% against 80% break threshold",
+    "whitespace": "pass"
+  },
+  "evidence": "docs/delivery/evidence/hardener-first-release-gates.json",
+  "outputGitRevision": null,
+  "recommendation": {
+    "qaMayProceed": true,
+    "reason": "The configured mutation policy passes, every survivor is explicitly classified as equivalent, no important survivor remains, production code is unchanged, and all post-edit deterministic gates pass."
+  }
+}

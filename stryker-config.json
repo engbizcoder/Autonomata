@@ -1,0 +1,33 @@
+{
+  "stryker-config": {
+    "project": "src/Autonomata/Autonomata.csproj",
+    "test-projects": [
+      "tests/Autonomata.Tests/Autonomata.Tests.csproj"
+    ],
+    "mutate": [
+      "**/AutomatonymousStateMachine.cs{5739..6631}",
+      "**/EventActivityBinder.cs{755..954}",
+      "**/EventActivityBinder.cs{1216..1355}",
+      "**/EventActivityBinder.cs{1573..1633}",
+      "**/EventActivityBinder.cs{1799..1856}",
+      "**/EventActivityBinder.cs{2182..2208}",
+      "**/EventActivityBinder.cs{2653..2679}",
+      "**/EventActivityBinder.cs{3405..3629}",
+      "**/EventActivityBinder.cs{3921..4085}",
+      "**/EventActivityBinder.cs{4221..4255}",
+      "**/EventActivityBinder.cs{4376..4401}",
+      "**/EventActivityBinder.cs{4520..4543}"
+    ],
+    "reporters": [
+      "cleartext",
+      "progress",
+      "json"
+    ],
+    "thresholds": {
+      "high": 90,
+      "low": 80,
+      "break": 80
+    },
+    "concurrency": 1
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "workflowRun": "autonomata-first-release",
+  "feature": "first-release-core-state-machine",
+  "role": "QA",
+  "attempt": 1,
+  "capturedAt": "2026-09-09T13:26:12Z",
+  "gitRevision": null,
+  "repositoryCondition": "Unborn repository with no resolvable HEAD; evidence is bound to package, fixture, specification, and product file hashes rather than a Git revision.",
+  "fixture": {
+    "kind": "clean temporary net10.0 console consumers",
+    "path": "/tmp/autonomata-first-release-qa.kUXtOD",
+    "access": "Only public API calls from PackageReference consumers; no ProjectReference, reflection, internal access, or metadata mutation.",
+    "packageSource": "artifacts/packages",
+    "packagesDirectory": "/tmp/autonomata-first-release-qa.kUXtOD/packages",
+    "files": {
+      "Autonomata.Qa.csproj": "df769ea305602f717c7b5d45931a4b672a4ef7eb7bc47d0a1ae1cf8dc1d9268e",
+      "Program.cs": "eacdb354af2cccd8b21e1d6485044833576e3fc9338a30a51446029ab0c9f06e",
+      "obj/project.assets.json": "f6038de01b8fdb24a3602a69cd8f043d21c487c7c97cf4a84899adde7efac3cd"
+    }
+  },
+  "commands": [
+    {
+      "command": "./scripts/pack.sh",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "Repacked Autonomata 0.1.0 and its symbol package from the release build without modifying production code. Package hashes exactly match the earlier Cleaner evidence."
+    },
+    {
+      "command": "dotnet restore Autonomata.Qa.csproj --source <repository>/artifacts/packages --packages <temporary>/packages --disable-build-servers -m:1",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "The isolated consumer restored Autonomata solely from the local package source into a dedicated temporary package cache."
+    },
+    {
+      "command": "dotnet run --project Autonomata.Qa.csproj --no-restore --configuration Release --disable-build-servers --property:RestorePackagesPath=<temporary>/packages",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "Printed 'QA_PASS: all public-package scenarios passed'. TreatWarningsAsErrors was enabled in the consumer."
+    },
+    {
+      "command": "dotnet list Autonomata.Qa.csproj package --include-transitive --no-restore",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "The sole direct or transitive package in the net10.0 consumer was Autonomata 0.1.0."
+    },
+    {
+      "command": "dotnet restore MigrationSample.csproj (PackageReference Automatonymous 5.1.3) followed by dotnet build --no-restore --configuration Release",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "The standalone migration source compiled against the approved Automatonymous 5.1.3 baseline with 0 warnings and 0 errors. The initial restricted-network attempt failed with NU1301; the exact restore succeeded with approved network access and is classified as a resolved environmental limitation."
+    },
+    {
+      "command": "Change only PackageReference from Automatonymous 5.1.3 to Autonomata 0.1.0; restore solely from the local package source; dotnet run --no-restore --configuration Release",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "The identical source retained 'using Automatonymous;', compiled, ran, and printed 'MIGRATION_SAMPLE_PASS'."
+    },
+    {
+      "command": "unzip package contents and nuspec; inspect consumer project.assets.json; scan package inputs and assets for MassTransit and GreenPipes",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "Package identity, framework, licensing, documentation, symbols, dependency graph, and forbidden-reference checks passed."
+    },
+    {
+      "command": "git rev-parse --verify HEAD",
+      "exitCode": 128,
+      "result": "expected-unavailable",
+      "summary": "No Git revision exists, consistent with the required gitRevision null evidence mode."
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "result": "pass",
+      "summary": "No whitespace errors were present before this evidence artifact was written."
+    }
+  ],
+  "blackBoxScenarios": [
+    {
+      "scenario": "Untyped initial event and awaited declaration order",
+      "result": "pass",
+      "evidence": "Then ran once, ThenAsync started after Then, RaiseEvent and TransitionTo remained incomplete while the task was blocked, then the async callback completed before Active was persisted."
+    },
+    {
+      "scenario": "Typed event public context",
+      "result": "pass",
+      "evidence": "A value of 7, the exact instance, and the exact Event<int> were observed once through BehaviorContext<OrderState,int>."
+    },
+    {
+      "scenario": "State-specific behavior and DuringAny fallback",
+      "result": "pass",
+      "evidence": "Active and Suspended selected their respective exact Route behaviors; an exact Active Shared behavior suppressed DuringAny, while Suspended used the Shared fallback."
+    },
+    {
+      "scenario": "Ignore forms",
+      "result": "pass",
+      "evidence": "Ignore(Event), Ignore(Event<TData>), and When(Event).Ignore() all completed successfully without effects or state changes."
+    },
+    {
+      "scenario": "Unhandled event",
+      "result": "pass",
+      "evidence": "UnhandledEventException exposed the exact event and Initial state, named both in its message, and left the stored state unchanged."
+    },
+    {
+      "scenario": "Finalization",
+      "result": "pass",
+      "evidence": "Finalize persisted the machine's distinguished Final state."
+    },
+    {
+      "scenario": "Partial effects and no rollback on callback failure",
+      "result": "pass",
+      "evidence": "The original ApplicationException propagated; one prior effect remained, the later callback did not run, and the later transition did not change Active."
+    },
+    {
+      "scenario": "Automatonymous 5.1.3 standalone migration",
+      "result": "pass",
+      "evidence": "The same source compiled first against Automatonymous 5.1.3 and then against Autonomata 0.1.0 after changing only the PackageReference; using Automatonymous remained unchanged and runtime assertions passed."
+    }
+  ],
+  "migrationSample": {
+    "sourceSha256": "0cdef2f1661e70fd30ff42ac11707706140ec96de3411c5762b3dca5f7a5d4ae",
+    "automatonymousProjectSha256": "f27229abc96e950a16fa2d65e9496a3528b1656f88f424625577625d2ff44225",
+    "autonomataProjectSha256": "385e3cc6361f8ce54eb269bcbb679d47fd762272aca16a99227f415f14b93ce5",
+    "autonomataAssetsSha256": "d9280fc7f6d6ac27b1682d96ed21f0baa4cfaa2e264b32022b559a88ba303116",
+    "onlySourceChange": "None",
+    "onlyProjectChange": "PackageReference Include and Version changed from Automatonymous/5.1.3 to Autonomata/0.1.0."
+  },
+  "packageInspection": {
+    "nupkg": {
+      "path": "artifacts/packages/Autonomata.0.1.0.nupkg",
+      "sha256": "03f0cf5e9532e6bdd18fd221edcc34dd7c4793bea22dc810b2a3026365b81b5e"
+    },
+    "snupkg": {
+      "path": "artifacts/packages/Autonomata.0.1.0.snupkg",
+      "sha256": "091f37b47e84e816562458ec4ca2c19fdaac34d89ff4c3ea7c34c459ee24383e"
+    },
+    "packageId": "Autonomata",
+    "version": "0.1.0",
+    "targetFramework": "net10.0",
+    "assembly": "lib/net10.0/Autonomata.dll",
+    "runtimeDependencies": [],
+    "license": "MIT package license expression",
+    "readmeIncluded": true,
+    "readmeIndependenceDisclaimerVisible": true,
+    "xmlDocumentationIncluded": true,
+    "symbolPackageCreated": true,
+    "symbolPackageContainsPdb": true,
+    "forbiddenMassTransitOrGreenPipesReferences": []
+  },
+  "inputHashes": {
+    "docs/specification/first-release.md": "8b8e80665da74db759b280f619b9fdd669482df3f57d60993a6b6e22cf68d6fe",
+    "docs/delivery/project-policy.md": "d662625bb01a1e81f459688bb149a28a4bdaa6b3ace57ea021bc11bb2e6ea626",
+    "CONTEXT.md": "b51327e66ec12ecc68f2794cd825da9f5fb27b58a7a448cf1075ed093520ae30",
+    "harness.lock.json": "d395262f634c73da8a5a4e285269db791f57fd817af40c2166b717c69f07014e"
+  },
+  "productHashes": {
+    "src/Autonomata/AutomatonymousStateMachine.cs": "37b135b57396c9b9b108b0201e2747d985fa71325ad5b053a848826e79c794d9",
+    "src/Autonomata/BehaviorContext.cs": "269b18d37f0fb1f53ee5fe8ca2ec2fe69deee0732db5e6484e33427c2643260a",
+    "src/Autonomata/Event.cs": "71ca0e26aa2cf75be3b2d0c3d24e5ad7419c27375ec4feb550868562e62d139d",
+    "src/Autonomata/EventActivityBinder.cs": "624ba03a9ad074a9ec12c9c7b7138a6edad87d0ccf03c8ac3e271919f00f8c7e",
+    "src/Autonomata/State.cs": "849b8c1ecf68d0949ad6cfb55fafc260a5d9b3c688b0c45a508d804620a9a325",
+    "src/Autonomata/UnhandledEventException.cs": "b5b7bb5ed775f801ec7811adba8305f6bb5720d8ef77dc439e89cbd88a15f549",
+    "src/Autonomata/Autonomata.csproj": "9944cb09a415d844dd623aab47fdde42c68dedaa27919fcb71499679bb6c5fde"
+  },
+  "environmentalLimitations": [
+    {
+      "constraint": "The restricted sandbox could not resolve api.nuget.org for the one-time Automatonymous 5.1.3 baseline restore.",
+      "resolution": "The exact restore was rerun with approved network access and succeeded; all subsequent baseline and local-package checks passed.",
+      "blocksGate": false
+    }
+  ],
+  "result": "pass"
+}

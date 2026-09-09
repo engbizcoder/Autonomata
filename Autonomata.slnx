@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Autonomata/Autonomata.csproj" />
+  <Project Path="tests/Autonomata.Tests/Autonomata.Tests.csproj" />
+</Solution>

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "workflowRun": "autonomata-publication-readiness",
+  "feature": "public-readme-ci-and-initial-publication",
+  "role": "Coder",
+  "attempt": 1,
+  "capturedAt": "2026-09-09T14:34:03Z",
+  "gitRevision": null,
+  "repositoryCondition": "Unborn repository; evidence was captured immediately before creation of the initial revision.",
+  "scope": {
+    "runtimeBehaviorChanged": false,
+    "changes": [
+      "Expanded README usage, compatibility, migration, failure, and development documentation.",
+      "Added a minimal .NET 10 GitHub Actions verification workflow.",
+      "Strengthened public-repository ignore rules."
+    ]
+  },
+  "commands": [
+    {
+      "command": "./scripts/restore.sh",
+      "result": "pass",
+      "summary": "Locked restore completed."
+    },
+    {
+      "command": "./scripts/build.sh",
+      "result": "pass",
+      "summary": "Release build succeeded with 0 warnings and 0 errors."
+    },
+    {
+      "command": "./scripts/test.sh",
+      "result": "pass",
+      "summary": "14 tests passed; 0 failed; 0 skipped."
+    },
+    {
+      "command": "./scripts/format.sh",
+      "result": "pass",
+      "summary": "No formatting changes were required."
+    },
+    {
+      "command": "./scripts/coverage.sh",
+      "result": "pass",
+      "summary": "Line coverage 92.78% passed the configured 90% threshold; branch coverage 74.32%; method coverage 97.10%."
+    },
+    {
+      "command": "./scripts/mutation.sh",
+      "result": "pass",
+      "summary": "The configured critical scope tested 25 mutants: 21 killed, 4 survived, 0 timeout, 0 error; mutation score 84.00% passed the 80% break threshold."
+    },
+    {
+      "command": "./scripts/pack.sh",
+      "result": "pass",
+      "summary": "Autonomata 0.1.0 package and symbol package were created successfully; no package was published."
+    },
+    {
+      "command": "Temporary net10.0 PackageReference consumer compiled and ran the README example against the local package",
+      "result": "pass",
+      "summary": "The example printed 7 and True using only the packed public API."
+    },
+    {
+      "command": "Public-tree credential-pattern, sensitive-filename, symlink, ignored-output, and forbidden-runtime-reference scans",
+      "result": "pass",
+      "summary": "No credential-shaped value, sensitive credential file, external symlink, generated output selected for commit, or forbidden runtime infrastructure reference was found."
+    },
+    {
+      "command": "gh api repos/engbizcoder/Autonomata",
+      "result": "available",
+      "summary": "GitHub returned HTTP 404 before repository creation; no existing repository would be overwritten."
+    }
+  ],
+  "verifiedActions": {
+    "actions/checkout": "v7.0.1 (workflow pins major v7)",
+    "actions/setup-dotnet": "v6.0.0 (workflow pins major v6)"
+  },
+  "hashes": {
+    "README.md": "c4aa2b04cb4fc83c79343b3e669bcc708491f23e8eec9d4035420f8a01fd0034",
+    ".github/workflows/ci.yml": "d1be0c5bc72506211ad799d1371b78affbabe1150d74403346c430b81fbf766d",
+    ".gitignore": "68e3118c61414eea5fedee120b2e6eb8c2bf67bd6687ea32ad6391ec23f9e8f1",
+    "src/Autonomata/AutomatonymousStateMachine.cs": "37b135b57396c9b9b108b0201e2747d985fa71325ad5b053a848826e79c794d9",
+    "tests/Autonomata.Tests/StateMachineTests.cs": "5efff2129e67a80190a656dac0664886710d8a5145f00426e0835300ee8eb15f",
+    "artifacts/coverage/coverage.cobertura.xml": "1ef028a19f3e997e2d4ee96315b7843bd158f3d2a1f925fe73239a1929778c12",
+    "artifacts/packages/Autonomata.0.1.0.nupkg": "4a5b813b436b18ca7571890efe36aa0be7c3191cc6abe138290d33426c35a728",
+    "artifacts/packages/Autonomata.0.1.0.snupkg": "8c4a80b1d5f18f9d6edb4488a448c699323f41b518943a53d53578b27788d7ee"
+  },
+  "result": "pass"
+}

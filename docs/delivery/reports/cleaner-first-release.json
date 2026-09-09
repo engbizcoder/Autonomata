@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "workflowRun": "autonomata-first-release",
+  "feature": "first-release-core-state-machine",
+  "role": "Cleaner",
+  "attempt": 1,
+  "completedAt": "2026-09-09T12:08:01Z",
+  "inputs": {
+    "gitRevision": null,
+    "specification": "docs/specification/first-release.md",
+    "specificationApproval": "docs/delivery/approvals/first-release-specification.json",
+    "projectPolicy": "docs/delivery/project-policy.md",
+    "domainContext": "CONTEXT.md",
+    "harnessVersion": "v0.1.1",
+    "harnessCommit": "3f041a9c6263174242a841ee19f6b8aa372708e9"
+  },
+  "scope": {
+    "production": "All files under src/Autonomata were treated as changed because the repository has no initial commit.",
+    "tests": "All files under tests/Autonomata.Tests were inspected.",
+    "concerns": [
+      "naming",
+      "duplication",
+      "local complexity",
+      "readability",
+      "maintainability",
+      "coverage",
+      "CRAP"
+    ]
+  },
+  "result": "pass",
+  "sourceOrTestChanges": [],
+  "findings": [
+    {
+      "severity": "informational",
+      "subject": "Runtime and DSL naming",
+      "assessment": "Names consistently use the approved State, Event, Behavior, Transition, Finalization, Ignored event, and Unhandled event vocabulary. No misleading transport, saga, or persistence terminology was found."
+    },
+    {
+      "severity": "informational",
+      "subject": "Duplication and local readability",
+      "assessment": "The small amount of repetition between typed and untyped binders preserves fluent return types and data-specific contexts. Extracting it would add indirection without a material maintainability benefit. No actionable duplication or naming defect remains."
+    },
+    {
+      "severity": "informational",
+      "subject": "Highest-complexity changed production method",
+      "assessment": "Coverlet reports complexity 16 and 94.73% line coverage for the generated async MoveNext method backing RaiseEventCore. Its calculated CRAP score is approximately 16.04. The method was inspected because its complexity exceeds 15; its serial behavior-step switch directly expresses the approved ordering semantics and is below the blocking CRAP threshold of 30."
+    },
+    {
+      "severity": "informational",
+      "subject": "Coverage margin",
+      "assessment": "Total line coverage is 91.23%, above the configured 90% threshold. Uncovered lines are primarily public guard paths and declaration overloads; no consequential transition-selection, ordering, persistence, ignore, unhandled-event, finalization, or callback-failure behavior is unexercised by the current acceptance-oriented suite. Mutation adequacy remains the later Hardener role's responsibility."
+    }
+  ],
+  "unresolvedBlockingFindings": [],
+  "assumptions": [
+    "The configured CRAP policy uses CRAP = complexity^2 * (1 - lineCoverage)^3 + complexity.",
+    "The repository-wide coverage report is acceptable as changed-code evidence because every production file is new in this unborn repository."
+  ],
+  "evidence": "docs/delivery/evidence/cleaner-first-release-gates.json",
+  "outputGitRevision": null,
+  "recommendation": {
+    "architectMayProceed": true,
+    "reason": "All deterministic behavior and maintainability gates pass, and no blocking Cleaner finding remains."
+  }
+}
