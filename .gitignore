@@ -19,3 +19,7 @@ StrykerOutput/
 *.p12
 *.snk
 secrets.json
+# Local agent workflow material
+/AGENTS.md
+/harness.lock.json
+/docs/delivery/

@@ -155,4 +155,4 @@ Install the .NET SDK selected by [`global.json`](global.json), then run the repo
 ./scripts/pack.sh       # local NuGet and symbol packages
 ```
 
-The approved specification, architecture decision, role reports, and deterministic gate evidence are retained under [`docs/`](docs/). Autonomata is licensed under the [MIT License](LICENSE).
+The [first-release specification](docs/specification/first-release.md) and [architecture decisions](docs/adr/) document the public behavior and design rationale. Autonomata is licensed under the [MIT License](LICENSE).
