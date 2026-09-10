@@ -1,6 +1,6 @@
 # Autonomata first-release specification
 
-Status: approved on 2026-09-09; see `docs/delivery/approvals/first-release-specification.json`
+Status: approved on 2026-09-09
 
 ## Feature story
 
